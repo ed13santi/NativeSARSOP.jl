@@ -1,11 +1,11 @@
-function sample!(sol, tree)
+function sample!(sol, tree, verbose)
     empty!(tree.sampled)
     L = tree.V_lower[1]
     U = L + sol.epsilon*root_diff(tree)
-    sample_points(sol, tree, 1, L, U, 0, sol.epsilon*root_diff(tree))
+    sample_points(sol, tree, 1, L, U, 0, sol.epsilon*root_diff(tree), verbose)
 end
 
-function sample_points(sol::SARSOPSolver, tree::SARSOPTree, b_idx::Int, L, U, t, ϵ)
+function sample_points(sol::SARSOPSolver, tree::SARSOPTree, b_idx::Int, L, U, t, ϵ, verbose)
     tree.b_pruned[b_idx] = false
     if !tree.is_real[b_idx]
         tree.is_real[b_idx] = true
@@ -19,6 +19,12 @@ function sample_points(sol::SARSOPSolver, tree::SARSOPTree, b_idx::Int, L, U, t,
     γ = discount(tree)
 
     V̂ = V̄ #TODO: BAD, binning method
+
+    if verbose
+        println(V̂)
+        println(V̲)
+    end
+    
     if V̂ ≤ V̲ + sol.kappa*ϵ*γ^(-t) || (V̂ ≤ L && V̄ ≤ max(U, V̲ + ϵ*γ^(-t)))
         return
     else
@@ -82,7 +88,6 @@ function best_obs(tree::SARSOPTree, b_idx, ba_idx, ϵ, t)
     weights_sum = sum(weights)
     weights = [x / weights_sum for x in weights]
     random_number = rand(1)[1]
-    print(random_number)
     tot_prob = 0
     for (o,w) in zip(O, weights)
         tot_prob = tot_prob + w

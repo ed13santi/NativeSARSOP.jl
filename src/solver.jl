@@ -17,7 +17,7 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
     t0 = time()
     iter = 0
     while time()-t0 < solver.max_time && root_diff(tree) > solver.precision
-        sample!(solver, tree)
+        sample!(solver, tree, verbose)
         backup!(tree)
         # prune!(solver, tree)
         iter += 1
