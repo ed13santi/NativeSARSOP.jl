@@ -17,11 +17,16 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
     t0 = time()
     iter = 0
     while time()-t0 < solver.max_time && root_diff(tree) > solver.precision
-        sample!(solver, tree, verbose)
+        if solver.verbose
+            print(time()-t0)
+        end
+        sample!(solver, tree)
         backup!(tree)
         # prune!(solver, tree)
         iter += 1
     end
+
+    println(root_diff(tree))
 
     pol = AlphaVectorPolicy(
         pomdp,

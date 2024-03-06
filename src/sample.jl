@@ -1,11 +1,11 @@
-function sample!(sol, tree, verbose)
+function sample!(sol, tree)
     empty!(tree.sampled)
     L = tree.V_lower[1]
     U = L + sol.epsilon*root_diff(tree)
-    sample_points(sol, tree, 1, L, U, 0, sol.epsilon*root_diff(tree), verbose)
+    sample_points(sol, tree, 1, L, U, 0, sol.epsilon*root_diff(tree))
 end
 
-function sample_points(sol::SARSOPSolver, tree::SARSOPTree, b_idx::Int, L, U, t, ϵ, verbose)
+function sample_points(sol::SARSOPSolver, tree::SARSOPTree, b_idx::Int, L, U, t, ϵ)
     tree.b_pruned[b_idx] = false
     if !tree.is_real[b_idx]
         tree.is_real[b_idx] = true
@@ -20,11 +20,11 @@ function sample_points(sol::SARSOPSolver, tree::SARSOPTree, b_idx::Int, L, U, t,
 
     V̂ = V̄ #TODO: BAD, binning method
 
-    if verbose
+    if sol.verbose
         println(V̂)
         println(V̲)
     end
-    
+
     if V̂ ≤ V̲ + sol.kappa*ϵ*γ^(-t) || (V̂ ≤ L && V̄ ≤ max(U, V̲ + ϵ*γ^(-t)))
         return
     else
