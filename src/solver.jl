@@ -26,14 +26,14 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
         iter += 1
     end
 
-    print(root_diff(tree))
+    print(tree.V_upper[0], tree.V_lower[0])
 
     pol = AlphaVectorPolicy(
         pomdp,
         getproperty.(tree.Γ, :alpha),
         ordered_actions(pomdp)[getproperty.(tree.Γ, :action)]
     )
-    return pol, root_diff(tree), (;
+    return pol, (;
         time = time()-t0, 
         tree,
         iter,
