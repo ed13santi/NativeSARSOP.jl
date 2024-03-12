@@ -33,11 +33,10 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
         getproperty.(tree.Γ, :alpha),
         ordered_actions(pomdp)[getproperty.(tree.Γ, :action)]
     )
-    return pol, (;
+    return pol, root_diff(tree), (;
         time = time()-t0, 
         tree,
         iter,
-        root_diff(tree)
     )
 end
 
