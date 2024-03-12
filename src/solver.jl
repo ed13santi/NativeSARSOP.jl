@@ -23,6 +23,8 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
         iter += 1
     end
 
+    print(root_diff(tree))
+
     pol = AlphaVectorPolicy(
         pomdp,
         getproperty.(tree.Γ, :alpha),
@@ -31,7 +33,8 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
     return pol, (;
         time = time()-t0, 
         tree,
-        iter
+        iter,
+        root_diff(tree)
     )
 end
 
