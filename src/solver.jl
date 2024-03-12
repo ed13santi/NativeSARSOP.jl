@@ -26,7 +26,7 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
         iter += 1
     end
 
-    println(tree.V_upper[0] - tree.V_lower[0])
+    println(tree.V_upper[1] - tree.V_lower[1])
 
     pol = AlphaVectorPolicy(
         pomdp,
