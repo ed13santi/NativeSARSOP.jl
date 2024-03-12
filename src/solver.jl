@@ -22,7 +22,7 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
         end
         sample!(solver, tree)
         backup!(tree)
-        # prune!(solver, tree)
+        prune!(solver, tree)
         iter += 1
     end
 

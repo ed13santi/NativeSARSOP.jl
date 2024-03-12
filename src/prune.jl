@@ -75,9 +75,7 @@ end
 end
 
 function compare_dominate(α_i, α_j)
-    a1_dominant = true
-    a2_dominant = true
-    diff = α1 - α2
+    diff = α_i - α_j
     a1_dominant = !all(diff < 0)
     a2_dominant = !all(diff >= 0)
     return a1_dominant, a2_dominant
