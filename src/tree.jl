@@ -94,7 +94,7 @@ function insert_root!(solver, tree::SARSOPTree, b)
     pomdp = tree.pomdp
 
     Γ_lower = solve(solver.init_lower, pomdp)
-    Γ_lower = [vector .- 0.1 for vector in Γ_lower]
+    Γ_lower.alphas = [vector .- 0.1 for vector in Γ_lower.alphas]
     for (α,a) ∈ alphapairs(Γ_lower)
         new_val = dot(α, b) 
         push!(tree.Γ, AlphaVec(α, a))
