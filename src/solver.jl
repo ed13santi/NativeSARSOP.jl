@@ -39,7 +39,7 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
         flag = "0"
     end
     println(open(solver.path, "w"), flag)
-    close(file)
+    close(solver.path)
 
 
     pol = AlphaVectorPolicy(
