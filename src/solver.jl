@@ -38,8 +38,7 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
     if root_diff(tree) <= solver.precision
         flag = "0"
     end
-    file_path = path
-    println(open(file_path, "w"), flag)
+    println(open(solver.path, "w"), flag)
     close(file)
 
 
