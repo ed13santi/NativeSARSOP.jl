@@ -1,8 +1,8 @@
 function sample!(sol, tree)
     empty!(tree.sampled)
     L = tree.V_lower[1]
-    U = L + sol.epsilon*root_diff(tree)
-    sample_points(sol, tree, 1, L, U, 0, sol.epsilon*root_diff(tree))
+    U = L + sol.epsilon # *root_diff(tree)
+    sample_points(sol, tree, 1, L, U, 0, sol.epsilon) # *root_diff(tree))
 end
 
 function sample_points(sol::SARSOPSolver, tree::SARSOPTree, b_idx::Int, L, U, t, ϵ)
