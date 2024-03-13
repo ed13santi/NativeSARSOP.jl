@@ -17,9 +17,9 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
     t0 = time()
     iter = 0
     while time()-t0 < solver.max_time && root_diff(tree) > solver.precision
-        println("STEPS")
-        println(tree.V_upper[1])
-        println(tree.V_lower[1])
+        # println("STEPS")
+        # println(tree.V_upper[1])
+        # println(tree.V_lower[1])
         if solver.verbose
             print(time()-t0)
         end
@@ -30,9 +30,8 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
     end
 
 
-    println("FINAL")
-    println(tree.V_upper[1])
-    println(tree.V_lower[1])
+    # println("FINAL")
+    println(root_diff(tree))
 
 
     pol = AlphaVectorPolicy(
