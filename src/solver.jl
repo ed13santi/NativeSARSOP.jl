@@ -6,8 +6,9 @@ Base.@kwdef struct SARSOPSolver{LOW,UP} <: Solver
     max_time::Float64   = 1.0
     max_steps::Int      = typemax(Int)
     verbose::Bool       = true
-    init_lower::LOW     = BlindLowerBound(bel_res = 0.1)
-    init_upper::UP      = FastInformedBound(bel_res=0.1)
+    initial_bounds_uncertainty::Float64 = 0.01
+    init_lower::LOW     = BlindLowerBound(bel_res = initial_bounds_uncertainty)
+    init_upper::UP      = FastInformedBound(bel_res=initial_bounds_uncertainty)
     prunethresh::Float64= 0.10
 end
 

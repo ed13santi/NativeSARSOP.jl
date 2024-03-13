@@ -40,7 +40,7 @@ function SARSOPTree(solver, pomdp::POMDP)
     cache = TreeCache(sparse_pomdp)
 
     upper_policy = solve(solver.init_upper, sparse_pomdp)
-    corner_values = [maximum([sublist[i] for sublist in upper_policy.alphas]) + 0.1 for i in 1:length(upper_policy.alphas[1])]
+    corner_values = [maximum([sublist[i] for sublist in upper_policy.alphas]) + solve.initial_bounds_uncertainty for i in 1:length(upper_policy.alphas[1])]
 
 
     tree = SARSOPTree(
@@ -95,7 +95,7 @@ function insert_root!(solver, tree::SARSOPTree, b)
 
     Γ_lower = solve(solver.init_lower, pomdp)
     for (α,a) ∈ alphapairs(Γ_lower)
-        α = α .- 0.1
+        α = α .- solver.initial_bounds_uncertainty
         new_val = dot(α, b) 
         push!(tree.Γ, AlphaVec(α, a))
     end
