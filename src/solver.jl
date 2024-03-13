@@ -10,6 +10,7 @@ Base.@kwdef struct SARSOPSolver{LOW,UP} <: Solver
     init_lower::LOW     = BlindLowerBound(bel_res = initial_bounds_uncertainty)
     init_upper::UP      = FastInformedBound(bel_res=initial_bounds_uncertainty)
     prunethresh::Float64= 0.10
+    path::String
 end
 
 function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
@@ -17,6 +18,7 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
 
     t0 = time()
     iter = 0
+    flag = "1"
     while time()-t0 < solver.max_time && root_diff(tree) > solver.precision
         # println("STEPS")
         # println(tree.V_upper[1])
@@ -30,9 +32,15 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
         iter += 1
     end
 
-
-    # println("FINAL")
+    # print final difference
     println(root_diff(tree))
+    # if the difference is bigger than the precision (program stopped due to time), write a flag to a file
+    if root_diff(tree) <= solver.precision
+        flag = "0"
+    end
+    file_path = path
+    println(open(file_path, "w"), flag)
+    close(file)
 
 
     pol = AlphaVectorPolicy(
