@@ -38,8 +38,9 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
     if root_diff(tree) <= solver.precision
         flag = "0"
     end
-    println(open(solver.path, "w"), flag)
-    close(solver.path)
+    file = open(solver.path, "w")
+    println(file, flag)
+    close(file)
 
 
     pol = AlphaVectorPolicy(
