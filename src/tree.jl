@@ -40,7 +40,7 @@ function SARSOPTree(solver, pomdp::POMDP)
     cache = TreeCache(sparse_pomdp)
 
     upper_policy = solve(solver.init_upper, sparse_pomdp)
-    corner_values = [maximum([sublist[i] for sublist in upper_policy.alphas]) + solve.initial_bounds_uncertainty for i in 1:length(upper_policy.alphas[1])]
+    corner_values = [maximum([sublist[i] for sublist in upper_policy.alphas]) + solver.initial_bounds_uncertainty for i in 1:length(upper_policy.alphas[1])]
 
 
     tree = SARSOPTree(
