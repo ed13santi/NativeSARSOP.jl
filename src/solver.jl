@@ -9,7 +9,7 @@ Base.@kwdef struct SARSOPSolver{LOW,UP} <: Solver
     initial_bounds_uncertainty::Float64 = 0.01
     r_max::Float64
     init_lower::LOW     = BlindLowerBound(bel_res = initial_bounds_uncertainty)
-    init_upper::UP      = FastInformedBound(bel_res=initial_bounds_uncertainty, r_max)
+    init_upper::UP      = FastInformedBound(bel_res=initial_bounds_uncertainty, r_max=r_max)
     prunethresh::Float64= 0.10
     path::String
 end
