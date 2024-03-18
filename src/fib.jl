@@ -22,6 +22,8 @@ function update!(𝒫::ModifiedSparseTabular, M::FastInformedBound, Γ, 𝒮, �
     γ = discount(𝒫)
     residuals = M.residuals
 
+    Γ_tmp = [fill(0, length(S)) for a ∈ A]
+
     for a ∈ 𝒜
         α_a = M.α_tmp
         T_a = T[a]
@@ -52,8 +54,9 @@ function update!(𝒫::ModifiedSparseTabular, M::FastInformedBound, Γ, 𝒮, �
         end
         res = bel_res(Γ[a], α_a)
         residuals[a] = res
-        copyto!(Γ[a], α_a)
+        Γ_tmp[a] = α_a
     end
+    Γ = Γ_tmp
 end
 
 function POMDPs.solve(sol::FastInformedBound, pomdp::POMDP)
