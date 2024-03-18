@@ -20,9 +20,9 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
     t0 = time()
     iter = 0
 
-    println(tree.V_upper[1])
+    print(tree.V_upper[1])
     print( " upper -  lower ")
-    print(tree.V_lower[1])
+    println(tree.V_lower[1])
     while time()-t0 < solver.max_time && root_diff(tree) > solver.precision
         # println("STEPS")
         # println(tree.V_upper[1])
