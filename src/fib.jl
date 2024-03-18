@@ -42,7 +42,7 @@ function update!(𝒫::ModifiedSparseTabular, M::FastInformedBound, Γ, 𝒮, �
                     Tprob = T_a[s, s_next]
                     Vmax = -Inf
                     for α′ ∈ Γ
-                        tmp = Tprob*α′[s_next]
+                        tmp = α′[s_next]
                         tmp > Vmax && (Vmax = tmp)
                     end
                     next += Tprob*Vmax
