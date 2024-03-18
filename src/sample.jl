@@ -85,9 +85,16 @@ function best_obs(tree::SARSOPTree, b_idx, ba_idx, ϵ, t)
         end
         append!(weights,gap)
     end
+    weights = []
+    for o in O
+        if tree.poba[ba_idx][o] > 0.0
+            !append(weights, 1.0)
+        else
+            !append(weights, 0.0)
+        end
+    end
     weights_sum = sum(weights)
-    # weights = [x / weights_sum for x in weights]
-    weights = [1.0 / length(O) for _ in O]
+    weights = [x / weights_sum for x in weights]
     random_number = rand(1)[1]
     tot_prob = 0
     for (o,w) in zip(O, weights)
