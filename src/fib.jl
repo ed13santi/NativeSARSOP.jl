@@ -22,7 +22,7 @@ function update!(𝒫::ModifiedSparseTabular, M::FastInformedBound, Γ, 𝒮, �
     γ = discount(𝒫)
     residuals = M.residuals
 
-    Γ_tmp = [fill(0, length(S)) for a ∈ 𝒜]
+    Γ_tmp = [fill(0, length(𝒮)) for a ∈ 𝒜]
 
     for a ∈ 𝒜
         α_a = M.α_tmp
