@@ -34,10 +34,8 @@ function POMDPTools.solve_info(solver::SARSOPSolver, pomdp::POMDP)
 
     # print final difference
     println(root_diff(tree))
-    # if the difference is bigger than the precision (program stopped due to time), write a flag to a file
-    if root_diff(tree) <= solver.precision
-        flag = "0"
-    end
+    # write root difference in a file
+    flag = root_diff(tree)
     file = open(solver.path, "w")
     println(file, flag)
     close(file)
