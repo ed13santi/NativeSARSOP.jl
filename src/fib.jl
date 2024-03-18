@@ -63,7 +63,7 @@ function POMDPs.solve(sol::FastInformedBound, pomdp::POMDP)
     O = ordered_observations(pomdp)
     γ = discount(pomdp)
 
-    init_value = sol.init_value
+    # init_value = sol.init_value
     # Γ = if isfinite(sol.init_value)
     #     [fill(sol.init_value, length(S)) for a ∈ A]
     # else
