@@ -83,14 +83,10 @@ function best_obs(tree::SARSOPTree, b_idx, ba_idx, ϵ, t)
             best_gap = gap
             best_o = o
         end
-        append!(weights,gap)
-    end
-    weights = []
-    for o in O
-        if tree.poba[ba_idx][o] > 0.0
-            !append(weights, 1.0)
+        if poba > 0.0
+            append!(weights, 1.0)
         else
-            !append(weights, 0.0)
+            append!(weights, 0.0)
         end
     end
     weights_sum = sum(weights)
