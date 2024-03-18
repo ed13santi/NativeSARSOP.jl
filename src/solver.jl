@@ -8,7 +8,7 @@ Base.@kwdef struct SARSOPSolver{LOW,UP} <: Solver
     verbose::Bool       = true
     initial_bounds_uncertainty::Float64 = 0.01
     init_lower::LOW     = BlindLowerBound(bel_res = initial_bounds_uncertainty)
-    init_upper::UP      = FastInformedBound(bel_res=initial_bounds_uncertainty)
+    init_upper::UP      = QMDPSolver(bel_res=initial_bounds_uncertainty)
     prunethresh::Float64= 0.10
     path::String
 end

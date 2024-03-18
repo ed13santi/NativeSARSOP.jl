@@ -4,6 +4,8 @@ using POMDPs
 using POMDPTools
 using SparseArrays
 using LinearAlgebra
+using DiscreteValueIteration
+using POMDPLinter: @POMDP_require, @subreq
 
 export SARSOPSolver, SARSOPTree
 
