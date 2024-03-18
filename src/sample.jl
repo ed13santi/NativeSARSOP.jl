@@ -86,7 +86,8 @@ function best_obs(tree::SARSOPTree, b_idx, ba_idx, ϵ, t)
         append!(weights,gap)
     end
     weights_sum = sum(weights)
-    weights = [x / weights_sum for x in weights]
+    # weights = [x / weights_sum for x in weights]
+    weights = [1.0 / length(O) for _ in O]
     random_number = rand(1)[1]
     tot_prob = 0
     for (o,w) in zip(O, weights)
