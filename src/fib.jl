@@ -6,6 +6,7 @@ Base.@kwdef struct FastInformedBound <: Solver
     α_tmp::Vector{Float64}      = Float64[]
     residuals::Vector{Float64}  = Float64[]
     r_max::Float64  
+    ubi::Vector{Vector{Float64}}
 end
 
 function bel_res(α1, α2)
@@ -72,9 +73,13 @@ function POMDPs.solve(sol::FastInformedBound, pomdp::POMDP)
     # Γ = if isfinite(sol.init_value)
     #     [fill(sol.init_value, length(S)) for a ∈ A]
     # else
-    r_max = sol.r_max
-    V̄ = r_max/(1-γ)
-    Γ = [fill(V̄, length(S)) for a ∈ A]
+    if length(sol.ubi) == 0
+        r_max = sol.r_max
+        V̄ = r_max/(1-γ)
+        Γ = [fill(V̄, length(S)) for a ∈ A]
+    else
+        Γ = sol.ubi
+    end
     # end
     resize!(sol.α_tmp, length(S))
     residuals = resize!(sol.residuals, length(A))
