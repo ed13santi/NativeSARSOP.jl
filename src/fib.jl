@@ -22,8 +22,6 @@ function update!(𝒫::ModifiedSparseTabular, M::FastInformedBound, Γ, 𝒮, �
     γ = discount(𝒫)
     residuals = M.residuals
 
-    Γ_tmp = [fill(0.0, length(𝒮)) for a ∈ 𝒜]
-
     for a ∈ 𝒜
         α_a = M.α_tmp
         T_a = T[a]
@@ -39,24 +37,28 @@ function update!(𝒫::ModifiedSparseTabular, M::FastInformedBound, Γ, 𝒮, �
             elseif isterminal(𝒫,s)
                 α_a[s] = 0.
             else
-                next = 0
-                for s_next ∈ 𝒮
-                    Tprob = T_a[s, s_next]
+                tmp = 0.0
+                for o ∈ 𝒪
+                    O_ao = @view O_a[:,o] # FIXME: slow sparse indexing for inner O_ao[sp]
                     Vmax = -Inf
                     for α′ ∈ Γ
-                        tmp = α′[s_next]
-                        tmp > Vmax && (Vmax = tmp)
+                        Vb′ = 0.0
+                        for idx ∈ nzrange(T_a, s)
+                            sp = rv[idx]
+                            Tprob = nz[idx]
+                            Vb′ += O_ao[sp]*Tprob*α′[sp]
+                        end
+                        Vb′ > Vmax && (Vmax = Vb′)
                     end
-                    next += Tprob*Vmax
+                    tmp += Vmax
                 end
-                α_a[s] = rsa + γ*next
+                α_a[s] = rsa + γ*tmp
             end
         end
         res = bel_res(Γ[a], α_a)
         residuals[a] = res
-        Γ_tmp[a] = α_a
+        copyto!(Γ[a], α_a)
     end
-    Γ = Γ_tmp
 end
 
 function POMDPs.solve(sol::FastInformedBound, pomdp::POMDP)
