@@ -1,6 +1,6 @@
 Base.@kwdef struct FastInformedBound <: Solver
     max_iter::Int               = typemax(Int)
-    max_time::Float64           = 1.
+    max_time::Float64           = 600.0
     bel_res::Float64            = 1e-3
     init_value::Float64         = 0.
     α_tmp::Vector{Float64}      = Float64[]
