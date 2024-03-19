@@ -6,7 +6,7 @@ Base.@kwdef struct FastInformedBound <: Solver
     α_tmp::Vector{Float64}      = Float64[]
     residuals::Vector{Float64}  = Float64[]
     r_max::Float64  
-    ubi::Vector{Vector{Float64}}
+    ubi::Matrix{Float64}
 end
 
 function bel_res(α1, α2)
@@ -78,6 +78,7 @@ function POMDPs.solve(sol::FastInformedBound, pomdp::POMDP)
         V̄ = r_max/(1-γ)
         Γ = [fill(V̄, length(S)) for a ∈ A]
     else
+        julia_vector_of_vectors = [Vector(inner_list) for inner_list in sol.ubi]
         return AlphaVectorPolicy(pomdp, sol.ubi, A)
     end
     # end
