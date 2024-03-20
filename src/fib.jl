@@ -78,7 +78,7 @@ function POMDPs.solve(sol::FastInformedBound, pomdp::POMDP)
         V̄ = r_max/(1-γ)
         Γ = [fill(V̄, length(S)) for a ∈ A]
     else
-        julia_vector_of_vectors = [Vector(inner_list) for inner_list in sol.ubi]
+        julia_vector_of_vectors =  [sol.ubi[i, :] for i in 1:size(sol.ubi, 1)]
         return AlphaVectorPolicy(pomdp, sol.ubi, A)
     end
     # end
