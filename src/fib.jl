@@ -73,14 +73,14 @@ function POMDPs.solve(sol::FastInformedBound, pomdp::POMDP)
     # Γ = if isfinite(sol.init_value)
     #     [fill(sol.init_value, length(S)) for a ∈ A]
     # else
-    if sol.ubi[1,1] == -99999.87654
-        r_max = sol.r_max
-        V̄ = r_max/(1-γ)
-        Γ = [fill(V̄, length(S)) for a ∈ A]
-    else
-        julia_vector_of_vectors =  [sol.ubi[i, :] for i in 1:size(sol.ubi, 1)]
-        return AlphaVectorPolicy(pomdp, sol.ubi, A)
-    end
+    # if sol.ubi[1,1] == -99999.87654
+    r_max = sol.r_max
+    V̄ = r_max/(1-γ)
+    Γ = [fill(V̄, length(S)) for a ∈ A]
+    # else
+    #     julia_vector_of_vectors =  [sol.ubi[i, :] for i in 1:size(sol.ubi, 1)]
+    #     return AlphaVectorPolicy(pomdp, sol.ubi, A)
+    # end
     # end
     resize!(sol.α_tmp, length(S))
     residuals = resize!(sol.residuals, length(A))
