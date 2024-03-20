@@ -1,6 +1,6 @@
 Base.@kwdef struct BlindLowerBound <: Solver
     max_iter::Int               = typemax(Int)
-    max_time::Float64           = 600.0
+    max_time::Float64           = 1200.0
     bel_res::Float64            = 1e-3
     α_tmp::Vector{Float64}      = Float64[]
     residuals::Vector{Float64}  = Float64[]
