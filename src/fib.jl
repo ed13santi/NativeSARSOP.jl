@@ -6,7 +6,6 @@ Base.@kwdef struct FastInformedBound <: Solver
     α_tmp::Vector{Float64}      = Float64[]
     residuals::Vector{Float64}  = Float64[]
     r_max::Float64  
-    ubi::Matrix{Float64}
 end
 
 function bel_res(α1, α2)
