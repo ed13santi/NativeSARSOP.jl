@@ -91,7 +91,7 @@ function prune_alpha!(tree::SARSOPTree, δ)
         pruned[i] && continue
         for (j,α_j) ∈ enumerate(Γ)
             (j ≤ i || pruned[j]) && continue
-            a1_dominant,a2_dominant = compare_dominate(α_i, α_j)
+            a1_dominant,a2_dominant = belief_space_domination(α_i, α_j, B_valid, δ) # compare_dominate(α_i, α_j)
             #=
             NOTE: α1 and α2 shouldn't technically be able to mutually dominate
             i.e. a1_dominant and a2_dominant should never both be true.
