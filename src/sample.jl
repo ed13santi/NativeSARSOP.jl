@@ -66,6 +66,37 @@ function max_r_and_q(tree::SARSOPTree, b_idx::Int)
     return Q̲, Q̄, a′
 end
 
+# function best_obs(tree::SARSOPTree, b_idx, ba_idx, ϵ, t)
+#     S = states(tree)
+#     O = observations(tree)
+#     γ = discount(tree)
+
+#     best_o = 0
+#     best_gap = -Inf
+#     weights = []
+
+#     for o in O
+#         poba = tree.poba[ba_idx][o]
+#         bp_idx = tree.ba_children[ba_idx][o]
+#         gap = poba*(tree.V_upper[bp_idx] - tree.V_lower[bp_idx] - ϵ*γ^(-(t)))
+#         if gap > best_gap
+#             best_gap = gap
+#             best_o = o
+#         end
+#         append!(weights,gap)
+#     end
+#     weights_sum = sum(weights)
+#     weights = [x / weights_sum for x in weights]
+#     random_number = rand(1)[1]
+#     tot_prob = 0
+#     for (o,w) in zip(O, weights)
+#         tot_prob = tot_prob + w
+#         if tot_prob >= random_number
+#             return o
+#         end
+#     end
+# end
+
 function best_obs(tree::SARSOPTree, b_idx, ba_idx, ϵ, t)
     S = states(tree)
     O = observations(tree)
@@ -73,7 +104,6 @@ function best_obs(tree::SARSOPTree, b_idx, ba_idx, ϵ, t)
 
     best_o = 0
     best_gap = -Inf
-    weights = []
 
     for o in O
         poba = tree.poba[ba_idx][o]
@@ -83,18 +113,8 @@ function best_obs(tree::SARSOPTree, b_idx, ba_idx, ϵ, t)
             best_gap = gap
             best_o = o
         end
-        append!(weights,gap)
     end
-    weights_sum = sum(weights)
-    weights = [x / weights_sum for x in weights]
-    random_number = rand(1)[1]
-    tot_prob = 0
-    for (o,w) in zip(O, weights)
-        tot_prob = tot_prob + w
-        if tot_prob >= random_number
-            return o
-        end
-    end
+    return best_o
 end
 
 obs_prob(tree::SARSOPTree, ba_idx::Int, o_idx::Int) = tree.poba[ba_idx][o_idx]
